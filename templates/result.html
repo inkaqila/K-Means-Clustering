@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>Hasil Clustering</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Hasil Clustering</h2>
+        <div class="table-container">
+            {% for table in tables %}
+                {{ table | safe }}
+            {% endfor %}
+        </div>
+
+        <a href="/download" class="btn download-btn">Download Hasil Clustering (.csv)</a>
+
+        <div class="button-group">
+            <a href="/tampilkan/cluster" class="btn">Lihat Hasil Clustering</a>
+            <a href="/tampilkan/elbow" class="btn">Lihat Elbow Method</a>
+            <a href="/tampilkan/silhouette" class="btn">Lihat Silhouette Score</a>
+        </div>
+
+        {% if show_cluster %}
+            <h3>Grafik Clustering</h3>
+            <img src="{{ url_for('static', filename='cluster.png') }}">
+        {% elif show_elbow %}
+            <h3>Grafik Elbow Method</h3>
+            <img src="{{ url_for('static', filename='elbow.png') }}">
+        {% elif show_silhouette %}
+            <h3>Grafik Silhouette Score</h3>
+            <img src="{{ url_for('static', filename='silhouette.png') }}">
+        {% endif %}
+    </div>
+</body>
+</html>

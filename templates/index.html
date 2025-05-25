@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clustering dengan K-Means</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h2>Clustering dengan K-Means</h2>
+
+    <form action="/proses" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Proses Clustering</button>
+    </form>
+
+    {% if table is defined %}
+    <div class="table-container">
+        <h3>Dataset</h3>
+        {{ table|safe }}
+    </div>
+    <div class="button-group">
+        <a href="{{ url_for('download') }}" class="btn download-btn">Download Hasil Clustering (.csv)</a>
+        <button onclick="toggleImage('cluster')" class="btn">Lihat Hasil Clustering</button>
+        <button onclick="toggleImage('elbow')" class="btn">Lihat Elbow Method</button>
+        <button onclick="toggleImage('silhouette')" class="btn">Lihat Silhouette Score</button>
+    </div>
+    <div id="cluster" class="image" style="display:none;">
+        <h3>Grafik Hasil Clustering</h3>
+        <img src="{{ url_for('static', filename='cluster_plot.png') }}">
+    </div>
+    <div id="elbow" class="image" style="display:none;">
+        <h3>Grafik Elbow Method</h3>
+        <img src="{{ url_for('static', filename='elbow_plot.png') }}">
+    </div>
+    <div id="silhouette" class="image" style="display:none;">
+        <h3>Grafik Silhouette Score</h3>
+        <img src="{{ url_for('static', filename='silhouette_plot.png') }}">
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function toggleImage(id) {
+    ['cluster', 'elbow', 'silhouette'].forEach(item => {
+        document.getElementById(item).style.display = 'none';
+    });
+    document.getElementById(id).style.display = 'block';
+}
+</script>
+</body>
+</html>
